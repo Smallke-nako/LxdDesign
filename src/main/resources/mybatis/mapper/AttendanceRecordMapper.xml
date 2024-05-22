@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lxd.mapper.AttendanceRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.lxd.entity.AttendanceRecord">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <id property="number" column="number" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="BIGINT"/>
+            <result property="team" column="team" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,number,name,
+        phone,team,status,
+        create_time,update_time
+    </sql>
+    <update id="updateStatusInt">
+        update attendance_record set status = 1,update_time = (SELECT CURRENT_TIMESTAMP) where id = #{id}
+    </update>
+    <update id="updateTeamAttendanceCount">
+        update counter set count = ()
+    </update>
+    <update id="updateAttendanceCount">
+        UPDATE counter set count = ((SELECT count(*) FROM attendance_record WHERE `status`= 1 AND create_time = (SELECT CURRENT_DATE))),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日签到人数'
+    </update>
+    <update id="updateUnAttendanceCount">
+        UPDATE counter set count = ((SELECT count(*) FROM attendance_record WHERE `status`= 0 AND create_time = (SELECT CURRENT_DATE))),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日未签到人数'
+    </update>
+
+
+    <select id="findAll" resultType="com.example.lxd.entity.AttendanceRecord" resultMap="BaseResultMap">
+        SELECT * FROM attendance_record
+    </select>
+    <select id="selectDateTime" resultType="com.example.lxd.entity.AttendanceRecord" resultMap="BaseResultMap">
+        SELECT * FROM attendance_record
+        <where>
+          create_time = #{createTime}
+        </where>
+    </select>
+</mapper>

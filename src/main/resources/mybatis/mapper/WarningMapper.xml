@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lxd.mapper.WarningMapper">
+    <resultMap id="BaseResultMap" type="com.example.lxd.entity.Warning">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="imagename" column="imageName" jdbcType="VARCHAR"/>
+            <result property="image" column="image" jdbcType="BLOB" javaType="byte[]" typeHandler="com.example.lxd.util.BlobTypeHandler"/>
+            <result property="person" column="person" jdbcType="VARCHAR"/>
+            <result property="recorddata" column="recorddata" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,imagename,image,recorddata,person
+    </sql>
+    <delete id="deleteById">
+        delete from warning where id = #{id,javaType=INTEGER}
+    </delete>
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from warning
+    </select>
+</mapper>

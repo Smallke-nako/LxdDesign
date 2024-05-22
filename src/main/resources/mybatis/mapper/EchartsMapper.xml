@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lxd.mapper.EchartsMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.lxd.entity.Echarts">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="count" column="count" jdbcType="BIGINT"/>
+        <result property="time" column="time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <update id="updateSystemLoginSuccessCount">
+        UPDATE counter set count = (SELECT count(*) FROM person_login_log WHERE `status` = 0),time = (SELECT CURRENT_TIMESTAMP) WHERE `name` = '系统登录成功用户数'
+    </update>
+
+    <update id="updateSystemLoginFailCount">
+        UPDATE counter set count = (SELECT count(*) FROM person_login_log WHERE `status` = 1),time = (SELECT CURRENT_TIMESTAMP) WHERE `name` = '系统登录失败用户数'
+    </update>
+
+    <update id="updateOneTeamCount">
+        update counter set count = (SELECT count(*) FROM employee WHERE team = '1队'),time = (SELECT CURRENT_TIMESTAMP) WHERE `name` = '1队人数'
+    </update>
+
+    <update id="updateTwoTeamCount">
+        update counter set count = (SELECT count(*) FROM employee WHERE team = '2队'),time = (SELECT CURRENT_TIMESTAMP) WHERE `name` = '2队人数'
+    </update>
+
+    <update id="updateThreeTeamCount">
+        update counter set count = (SELECT count(*) FROM employee WHERE team = '3队'),time = (SELECT CURRENT_TIMESTAMP) WHERE `name` = '3队人数'
+    </update>
+
+    <update id="updateFourTeamCount">
+        update counter set count = (SELECT count(*) FROM employee WHERE team = '4队'),time = (SELECT CURRENT_TIMESTAMP) WHERE `name` = '4队人数'
+    </update>
+
+    <update id="updateFiveTeamCount">
+        update counter set count = (SELECT count(*) FROM employee WHERE team = '5队'),time = (SELECT CURRENT_TIMESTAMP) WHERE `name` = '5队人数'
+    </update>
+
+    <update id="updateEmloyeeCount">
+        UPDATE counter set count = ((SELECT count(*) FROM employee )),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '员工总数'
+    </update>
+
+    <update id="updateOneTeamAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 1 AND create_time = (SELECT CURRENT_DATE) AND team = '1队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日1队签到人数'
+    </update>
+
+    <update id="updateTwoTeamAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 1 AND create_time = (SELECT CURRENT_DATE) AND team = '2队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日2队签到人数'
+    </update>
+
+    <update id="updateThreeTeamAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 1 AND create_time = (SELECT CURRENT_DATE) AND team = '3队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日3队签到人数'
+    </update>
+
+    <update id="updateFourTeamAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 1 AND create_time = (SELECT CURRENT_DATE) AND team = '4队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日4队签到人数'
+    </update>
+
+    <update id="updateFiveTeamAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 1 AND create_time = (SELECT CURRENT_DATE) AND team = '5队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日5队签到人数'
+    </update>
+
+    <update id="updateOneTeamUnAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 0 AND create_time = (SELECT CURRENT_DATE) AND team = '1队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日1队未签到人数'
+    </update>
+
+    <update id="updateTwoTeamUnAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 0 AND create_time = (SELECT CURRENT_DATE) AND team = '2队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日2队未签到人数'
+    </update>
+
+    <update id="updateThreeTeamUnAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 0 AND create_time = (SELECT CURRENT_DATE) AND team = '3队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日3队未签到人数'
+    </update>
+
+    <update id="updateFourTeamUnAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 0 AND create_time = (SELECT CURRENT_DATE) AND team = '4队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日4队未签到人数'
+    </update>
+
+    <update id="updateFiveTeamUnAttendanceCount">
+        UPDATE counter set count = (SELECT count(*) FROM attendance_record WHERE `status`= 0 AND create_time = (SELECT CURRENT_DATE) AND team = '5队'),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日5队未签到人数'
+    </update>
+    <update id="updateAttendanceCount">
+        UPDATE counter set count = ((SELECT count(*) FROM attendance_record WHERE `status`= 1 AND create_time = (SELECT CURRENT_DATE))),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日签到人数'
+    </update>
+
+    <update id="updateUnAttendanceCount">
+        UPDATE counter set count = ((SELECT count(*) FROM attendance_record WHERE `status`= 0 AND create_time = (SELECT CURRENT_DATE))),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '今日未签到人数'
+    </update>
+
+    <update id="updateUsersCount">
+        UPDATE counter set count = ((SELECT count(*) FROM users)),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '用户总数'
+    </update>
+    <update id="updateSystemLoginCount">
+        UPDATE counter set count = ((SELECT count(*) FROM person_login_log)),time = (SELECT CURRENT_TIMESTAMP) WHERE name = '系统总登录记录'
+    </update>
+    <delete id="deleteA">
+        truncate table attendance_record
+    </delete>
+    <select id="selectEmployeeCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '员工总数'
+    </select>
+    <select id="selectOneTeamCount" resultType="com.example.lxd.entity.Echarts">
+    select * from counter where name = '1队人数'
+    </select>
+    <select id="selectTwoTeamCount" resultType="com.example.lxd.entity.Echarts">
+    select * from counter where name = '2队人数'
+    </select>
+    <select id="selectThreeTeamCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '3队人数'
+    </select>
+    <select id="selectFourTeamCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '4队人数'
+    </select>
+    <select id="selectFiveTeamCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '5队人数'
+    </select>
+    <select id="selectUsersCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '用户总数'
+    </select>
+    <select id="selectAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日签到人数'
+    </select>
+    <select id="selectUnAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日未签到人数'
+    </select>
+    <select id="selectOneTeamAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日1队签到人数'
+    </select>
+    <select id="selectTwoTeamAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日2队签到人数'
+    </select>
+    <select id="selectThreeTeamAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日3队签到人数'
+    </select>
+    <select id="selectFourTeamAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日4队签到人数'
+    </select>
+    <select id="selectFiveTeamAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日5队签到人数'
+    </select>
+    <select id="selectOneTeamUnAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日1队未签到人数'
+    </select>
+    <select id="selectTwoTeamUnAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日2队未签到人数'
+    </select>
+    <select id="selectThreeTeamUnAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日3队未签到人数'
+    </select>
+    <select id="selectFourTeamUnAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日4队未签到人数'
+    </select>
+    <select id="selectFiveTeamUnAttendanceCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '今日5队未签到人数'
+    </select>
+    <select id="selectSystemLoginSuccessCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '系统登录成功用户数'
+    </select>
+    <select id="selectSystemLoginFailCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '系统登录失败用户数'
+    </select>
+    <select id="selectSystemLoginCount" resultType="com.example.lxd.entity.Echarts">
+        select * from counter where name = '系统总登录记录'
+    </select>
+
+
+</mapper>

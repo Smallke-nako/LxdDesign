@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lxd.mapper.PersonLoginLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.lxd.entity.PersonLoginLog">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+            <result property="ipAddress" column="ip_address" jdbcType="VARCHAR"/>
+            <result property="loginLocation" column="login_location" jdbcType="VARCHAR"/>
+            <result property="browserType" column="browser_type" jdbcType="VARCHAR"/>
+            <result property="os" column="os" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,login_name,ip_address,
+        login_location,browser_type,os,
+        status,create_time
+    </sql>
+    <insert id="createLog" parameterType="com.example.lxd.entity.PersonLoginLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO person_login_log(login_name,ip_address,login_location, browser_type,os,status)
+        VALUES(#{loginName}, #{ipAddress}, #{loginLocation}, #{browserType}, #{os}, #{status})
+    </insert>
+    <delete id="deleteById">
+        delete from person_login_log where id = #{id,javaType=INTEGER}
+    </delete>
+    <select id="getLogPage" resultType="com.example.lxd.entity.PersonLoginLog" resultMap="BaseResultMap">
+        select * from person_login_log
+    </select>
+</mapper>

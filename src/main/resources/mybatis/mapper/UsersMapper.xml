@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lxd.mapper.UsersMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.lxd.entity.Users">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="salt" column="salt" jdbcType="VARCHAR"/>
+            <result property="enabled" column="enabled" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.lxd.entity.Users" keyProperty="id" useGeneratedKeys="true">
+        insert into users (username, password, email, phone,salt) values (#{username}, #{password}, #{email} ,#{phone},#{salt})
+    </insert>
+    <update id="update">
+        update users
+       <if test="email != null and phone != null ">
+           <set>
+            email = #{email},
+            phone = #{phone},
+           </set>
+       </if>
+        where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from users where id = #{id,javaType=INTEGER}
+    </delete>
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT id,username,phone,email,create_time,update_time FROM users
+    </select>
+    <select id="findByUsername" resultType="com.example.lxd.entity.Users">
+        SELECT  * FROM users where username = #{username,jdbcType=VARCHAR}
+    </select>
+</mapper>
